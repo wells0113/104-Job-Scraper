@@ -180,3 +180,70 @@ if __name__ == "__main__":
     main()
 
 ```
+
+```
+＃統整爬取職缺屬性與視覺化呈現共通特性
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from collections import Counter
+
+# 讀取檔案
+df = pd.read_csv("104_job_list_數據分析師.csv")
+
+# 顯示前幾筆資料確認格式
+df.head()
+
+# 處理薪資資料，提取下限（以月薪或面議為主）
+def parse_salary(s):
+    match = re.search(r'月薪(\d{1,3}(?:,\d{3})*|\d+)', s)
+    if match:
+        return int(match.group(1).replace(",", ""))
+    return None if "待遇面議" in s or not s else 0
+
+df["最低月薪"] = df["工作待遇"].apply(parse_salary)
+salary_count  = df["最低月薪"].value_counts()
+
+# 整理常見的欄位分類（學歷、工作經歷）
+edu_counts = df["學歷要求"].value_counts()
+exp_counts = df["工作經歷"].value_counts()
+
+# 擅長工具與工作技能的熱門統計（拆分後統計前10名）
+
+# 分割工具與技能欄位
+tools = df['擅長工具'].dropna().astype(str).str.split(', ')
+skills = df['工作技能'].dropna().astype(str).str.split(', ')
+
+# 統整並統計次數
+tool_counter = Counter([tool for sublist in tools for tool in sublist])
+skill_counter = Counter([skill for sublist in skills for skill in sublist])
+
+# 取前10名
+top_tools = tool_counter.most_common(10)
+top_skills = skill_counter.most_common(10)
+
+# 檢查內容
+salary_count, edu_counts, exp_counts, top_tools, top_skills
+
+# 分離成 x, y
+tool_names = [x[0] for x in top_tools]
+tool_counts = [x[1] for x in top_tools]
+
+plt.figure(figsize=(10, 6))
+sns.barplot(x=tool_counts, y=tool_names, palette="Blues_d")
+plt.title("擅長工具熱門統計（前10）", fontsize=16)
+plt.xlabel("出現次數", fontsize=12)
+plt.ylabel("工具名稱", fontsize=12)
+plt.tight_layout()
+plt.show()
+
+skill_names = [x[0] for x in top_skills]
+skill_counts = [x[1] for x in top_skills]
+
+plt.figure(figsize=(10, 6))
+sns.barplot(x=skill_counts, y=skill_names, palette="Greens_d")
+plt.title("工作技能熱門統計（前10）", fontsize=16)
+plt.xlabel("出現次數", fontsize=12)
+plt.ylabel("技能名稱", fontsize=12)
+plt.tight_layout()
+plt.show()
