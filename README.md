@@ -1,5 +1,5 @@
 # 104-Job-Scraper
-Python自動化爬蟲工具，用於搜尋指定關鍵字與地區的職缺，並輸出成 CSV 檔案與社覺化呈現職缺共通屬性。支援互動式地區選擇、錯誤處理與職缺詳細解析。
+Python自動化爬蟲工具，支援指定關鍵字與地區搜尋104求職網站上的職缺，並將收尋到的職缺工作說明與條件需求輸出成 CSV 檔案，最後統整爬取職缺各類資訊與視覺化呈現共通特性。
 
 ## 使用技術
 - Python 3
@@ -17,7 +17,7 @@ Python自動化爬蟲工具，用於搜尋指定關鍵字與地區的職缺，�
 ![image](https://github.com/user-attachments/assets/d9d9a0b8-185b-43c0-bc12-e0710969255f)
 
 - 自動開啟結果，友善使用者互動介面
-- 視覺化呈現爬取職缺的共通特性 （擅長工具、工作技能等）
+- 統統整爬取職缺各類資訊與視覺化呈現共通特性 （擅長工具、工作技能等）
 
 ## 執行方式
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
 ```
 
 ```
-＃統整爬取職缺屬性與視覺化呈現共通特性
+＃統整爬取職缺各類資訊與視覺化呈現共通特性
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -247,3 +247,4 @@ plt.xlabel("出現次數", fontsize=12)
 plt.ylabel("技能名稱", fontsize=12)
 plt.tight_layout()
 plt.show()
+```
