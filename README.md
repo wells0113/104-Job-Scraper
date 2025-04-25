@@ -7,6 +7,7 @@ Python自動化爬蟲工具，支援指定關鍵字與地區搜尋104求職網�
 - BeautifulSoup4
 - pandas
 - re / os / time 模組
+- tableau
 
 ## 功能特色
 - 自動擷取 104 網站職缺資料 （可指定關鍵字與地區）
